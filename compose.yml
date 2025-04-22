@@ -3,9 +3,10 @@ services:
      image: nginx:latest
      container_name: reverse_proxy
      volumes:
-         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
          - ./nginx/templates:/etc/nginx/templates
          - ./container_logs/nginx:/var/log/nginx
+         - ./public_html:/usr/share/nginx/html:ro
 #          - ./secrets/nginx:/etc/ssl
      ports:
          - "80:80"
@@ -30,3 +31,10 @@ services:
     volumes:
       - ./:/home/node/
     command: "npm start"
+
+  
+    
+    # FOR DEBUGGING
+    # command: "tail -f package.json"
+    # docker compose exec -it application /bin/bash
+
