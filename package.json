@@ -1,0 +1,15 @@
+{
+  "name": "wt1_cookstore",
+  "version": "1.0.0",
+  "description": "An app to store recipes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Error: no test specified'; false",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
