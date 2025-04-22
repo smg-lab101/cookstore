@@ -15,7 +15,11 @@ url=http://localhost:${port}/hello
 image_name=cookstore-image
 
 docker-start: open
+- docker container rm ${container_name} || true
+- docker container rm cookstore-container || true
+
 - docker container run --name ${container_name} --volume .:/home/node/ -p 3002:3002 ${image_name}:latest npm start
+- docker container run --name cookstore-container --volume .:/home/node/ -p 3002:3002 cookstore-image:latest npm start
 docker-stop: 
 - docker container stop ${container_name}
 
