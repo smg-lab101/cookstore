@@ -1,15 +1,15 @@
 const express = require("express");
-const server = express();
+const path = require("path");
+const app = express();
 const port = 3002;
 
-server.get("/hello", function (req, res) {
-    res.send("Hello CookStore!");
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public_html')));
+
+app.get("/list", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'list.html'));
 });
 
-server.get("/", function(req, res) {
-    res.redirect("/hello");
-});
-
-server.listen(port, function () {
-    console.log("Express listening on " + port);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
