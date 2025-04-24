@@ -10,6 +10,11 @@ app.get("/list", (req, res) => {
     res.sendFile(path.join(__dirname, 'public_html', 'list.html'));
 });
 
+// Optional: routes to other pages
+app.get("/detail", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public_html', 'detail.html'));
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
