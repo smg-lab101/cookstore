@@ -1,0 +1,32 @@
+[
+  {
+    "id": "carbonara",
+    "title": "Sarahs Spaghetti Carbonara",
+    "description": "Italienischer Klassiker mit Eiern, Käse und Speck",
+    "image": "Bild",
+    "ingredients": [
+      "400g Spaghetti",
+      "200g Pancetta oder Guanciale",
+      "4 Eier",
+      "100g Pecorino Romano",
+      "Salz und Pfeffer"
+    ],
+    "steps": "Spaghetti in Salzwasser kochen. In der Zwischenzeit den Speck in einer Pfanne auslassen.\nEier mit dem geriebenen Käse verquirlen, salzen und pfeffern.\nDie abgetropften Nudeln mit dem Speck vermischen und vom Herd nehmen.\nDie Ei-Käse-Mischung unterrühren bis eine cremige Sauce entsteht.\nSofort servieren mit etwas mehr geriebenem Käse."
+  },
+  {
+    "id": "apfelkuchen",
+    "title": "Bernds bester Apfelkuchen",
+    "description": "Traditioneller Kuchen mit frischen Äpfeln und Zimt",
+    "image": "Bild",
+    "ingredients": [
+      "5 Äpfel",
+      "200g Mehl",
+      "100g Butter",
+      "100g Zucker",
+      "2 Eier",
+      "1 TL Zimt",
+      "1 TL Backpulver"
+    ],
+    "steps": "Backofen auf 180°C vorheizen. Äpfel schälen, entkernen und in Scheiben schneiden.\nButter und Zucker cremig rühren, Eier einzeln unterrühren.\nMehl mit Backpulver und Zimt mischen und unterrühren.\nTeig in eine gefettete Form geben, Äpfel darauf verteilen und leicht eindrücken.\nCa. 40 Minuten backen, abkühlen lassen und servieren."
+  }
+]
