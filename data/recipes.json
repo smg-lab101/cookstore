@@ -28,5 +28,70 @@
       "1 TL Backpulver"
     ],
     "steps": "Backofen auf 180°C vorheizen. Äpfel schälen, entkernen und in Scheiben schneiden.\nButter und Zucker cremig rühren, Eier einzeln unterrühren.\nMehl mit Backpulver und Zimt mischen und unterrühren.\nTeig in eine gefettete Form geben, Äpfel darauf verteilen und leicht eindrücken.\nCa. 40 Minuten backen, abkühlen lassen und servieren."
+  },
+  {
+    "id": "quinoasalat-vivian",
+    "title": "Vivians bunter Quinoasalat",
+    "description": "Frischer, leichter Salat mit Gemüse und Feta",
+    "image": "Bild",
+    "ingredients": [
+      "150g Quinoa",
+      "1 rote Paprika",
+      "1/2 Gurke",
+      "100g Feta",
+      "2 Frühlingszwiebeln",
+      "Saft einer Zitrone",
+      "2 EL Olivenöl",
+      "Salz und Pfeffer"
+    ],
+    "steps": "Quinoa nach Packungsanweisung kochen und abkühlen lassen.\nPaprika, Gurke und Frühlingszwiebeln klein schneiden, Feta zerbröseln.\nAlles mit dem Quinoa in einer großen Schüssel vermengen.\nZitronensaft und Olivenöl zugeben, mit Salz und Pfeffer abschmecken.\nGut durchziehen lassen und gekühlt servieren."
+  },
+  {
+    "id": "pasta-brokkoli-vivian",
+    "title": "Vivians schnelle Brokkoli-Pasta",
+    "description": "Cremige Pasta mit grünem Gemüse",
+    "image": "Bild",
+    "ingredients": [
+      "300g Pasta",
+      "1 kleiner Brokkoli",
+      "1 Knoblauchzehe",
+      "100ml Sahne",
+      "50g Parmesan",
+      "Olivenöl",
+      "Salz und Pfeffer"
+    ],
+    "steps": "Pasta in Salzwasser kochen. Brokkoli in Röschen teilen und in den letzten 5 Minuten mitgaren.\nKnoblauch in Olivenöl anbraten, Sahne und Parmesan zugeben, kurz aufkochen.\nPasta und Brokkoli abgießen, zur Sauce geben und alles vermengen.\nMit Salz und Pfeffer abschmecken und servieren."
+  },
+  {
+    "id": "fruehstuecksbowle-sarah",
+    "title": "Sarahs Frühstücksbowle mit Beeren",
+    "description": "Gesunde Bowl mit Joghurt, Früchten und Haferflocken",
+    "image": "Bild",
+    "ingredients": [
+      "200g Naturjoghurt",
+      "2 EL Haferflocken",
+      "1 TL Honig",
+      "1 Handvoll Heidelbeeren",
+      "1 Handvoll Himbeeren",
+      "1/2 Banane",
+      "1 TL Chiasamen"
+    ],
+    "steps": "Joghurt mit Haferflocken und Honig verrühren.\nBanane in Scheiben schneiden, zusammen mit den Beeren auf dem Joghurt anrichten.\nChiasamen darüberstreuen und sofort genießen."
+  },
+  {
+    "id": "flammkuchen-bernd",
+    "title": "Bernds rustikaler Flammkuchen",
+    "description": "Herzhafter Flammkuchen mit Speck und Zwiebeln",
+    "image": "Bild",
+    "ingredients": [
+      "250g Mehl",
+      "125ml Wasser",
+      "2 EL Öl",
+      "1 Prise Salz",
+      "150g Crème fraîche",
+      "100g Speckwürfel",
+      "1 Zwiebel"
+    ],
+    "steps": "Backofen auf 220°C vorheizen. Aus Mehl, Wasser, Öl und Salz einen Teig kneten und dünn ausrollen.\nCrème fraîche auf dem Teig verstreichen.\nZwiebel in feine Ringe schneiden und mit Speckwürfeln auf dem Teig verteilen.\nCa. 15 Minuten backen, bis der Rand knusprig ist."
   }
 ]
