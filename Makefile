@@ -20,11 +20,19 @@ docker-start: open
 
 - docker container run --name ${container_name} --volume .:/home/node/ -p 3002:3002 ${image_name}:latest npm start
 - docker container run --name cookstore-container --volume .:/home/node/ -p 3002:3002 cookstore-image:latest npm start
-docker-stop: 
-- docker container stop ${container_name}
 
 docker-build:
 - docker image build --tag ${image_name}:latest .
+- docker image build --tag cookstore-image:latest .
+
+
+docker-stop: 
+- docker container stop ${container_name}
+
+
+
+docker-bash:
+- docker container exec -it cookstore-container /bin/bash
 
 open:
 - open ${url}
