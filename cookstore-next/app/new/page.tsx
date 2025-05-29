@@ -1,6 +1,9 @@
-import {useRouter} from "next/router";
-import React, {useState} from "react";
-import {NextPage} from "next";
+"use client";
+
+import { useRouter } from "next/navigation"; 
+import React, { useState } from "react";
+import { NextPage } from "next";
+import Link from "next/link";
 
 const NewRecipePage: NextPage = () => {
 
@@ -48,7 +51,7 @@ const NewRecipePage: NextPage = () => {
             <div className="header">
                 <div className="logo">Logo</div>
                 <div>
-                    <a href="/list" className="btn">Zu den Rezepten</a>
+                <Link href="/list" className="btn">Zu den Rezepten</Link>
                     <button form="newRecipeForm" type="submit" className="btn">Speichern</button>
                 </div>
             </div>
