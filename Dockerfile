@@ -1,5 +1,16 @@
-FROM node:current
+FROM node:18-alpine
 
 WORKDIR /home/node
-COPY package.json package-lock.json /home/node/
-EXPOSE 3000
+
+# Kopiere nur das Nötigste zum Installieren
+COPY package*.json ./
+RUN npm install
+
+# Jetzt den Rest
+COPY . .
+
+# Build für Produktion
+RUN npm run build
+
+EXPOSE 3002
+CMD ["npm", "start"]

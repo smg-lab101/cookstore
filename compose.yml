@@ -1,36 +1,15 @@
-services:
-  nginx:
-     image: nginx:latest
-     container_name: reverse_proxy
-     volumes:
-         - ./nginx/templates:/etc/nginx/templates
-         - ./public_html:/usr/share/nginx/html:ro
-     ports:
-         - "80:80"
-     environment:
-        - NGINX_PORT=80
-        - NGINX_PROXY=http://application:3002
-#        - NGINX_CERT_DIR=/etc/ssl
-#        - NGINX_SSL_PORT=443
-#        - NGINX_ENTRYPOINT_QUIET_LOGS=1
-     depends_on:
-         - application
-     restart: always
+version: "3.8"
 
+services:
   application:
-    image: cookbook-image
     build:
       context: .
       dockerfile: Dockerfile
+    image: cookbook-image
     ports:
       - "3002:3002"
     volumes:
-      - ./:/home/node/
+      - .:/home/node/
+    environment:
+      - PORT=3002
     command: "npm start"
-
-  
-    
-    # FOR DEBUGGING
-    # command: "tail -f package.json"
-    # docker compose exec -it application /bin/bash
-
