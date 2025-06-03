@@ -8,8 +8,6 @@ services:
     image: cookbook-image
     ports:
       - "3002:3002"
-    volumes:
-      - .:/home/node/
     environment:
       - PORT=3002
     command: "npm start"
