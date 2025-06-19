@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { User, Recipe } = require('/Users/sarahmariagruber/Documents/HTW/06_Semester/02_VerteilteSysteme/cookstore/models/index.js'); // Passe den Pfad an
+const { User, Recipe } = require('../models/index.js'); // Passe den Pfad an
 
 const mongodbURI = process.env.MONGODB_URI ||
     ((process.env.NODE_ENV === 'cookstore')
