@@ -8,6 +8,23 @@ services:
     image: cookbook-image
     ports:
       - "3002:3002"
+    volumes:
+      - .:/home/node/
     environment:
       - PORT=3002
+      - MONGO_URI=mongodb://mongo:27017/cookstore
+    depends_on:
+      - mongo
     command: "npm start"
+
+  mongo:
+    image: mongo:6
+    container_name: cookstore-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
