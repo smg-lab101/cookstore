@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
@@ -33,7 +33,7 @@ const NewRecipePage: NextPage = () => {
             image: "Bild", // Platzhalter
         };
 
-        const res = await fetch("/api/submit-recipe", {
+        const res = await fetch("/api/recipes/new", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -51,7 +51,7 @@ const NewRecipePage: NextPage = () => {
             <div className="header">
                 <div className="logo">Logo</div>
                 <div>
-                <Link href="/list" className="btn">Zu den Rezepten</Link>
+                    <Link href="/list" className="btn">Zu den Rezepten</Link>
                     <button form="newRecipeForm" type="submit" className="btn">Speichern</button>
                 </div>
             </div>
