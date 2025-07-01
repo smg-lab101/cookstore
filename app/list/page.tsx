@@ -1,8 +1,5 @@
 // app/list/page.tsx
-import fs from "fs";
-import path from "path";
-import Link from "next/link"
-
+import Link from "next/link";
 
 type Recipe = {
   id: string;
@@ -12,9 +9,19 @@ type Recipe = {
 };
 
 export default async function RecipeList() {
-  const dataPath = path.join(process.cwd(), "app/data/recipes.json");
-  const jsonData = fs.readFileSync(dataPath, "utf-8");
-  const recipes: Recipe[] = JSON.parse(jsonData);
+  const res = await fetch("http://localhost:3000/api/recipes", {
+    cache: "no-store", // wichtig, damit neue Rezepte direkt angezeigt werden
+  });
+
+
+  const data = await res.json();
+
+  if (!Array.isArray(data)) {
+    console.error("Invalid response from API:", data);
+    return <div>Fehler beim Laden der Rezepte</div>;
+  }
+
+  const recipes: Recipe[] = data;
 
   return (
     <div>

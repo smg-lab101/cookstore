@@ -8,6 +8,7 @@ const UserSchema = new Schema({
 });
 
 const RecipeSchema = new Schema({
+    id: String,
     title: String,
     portions: Number,
     imageUrl: String,

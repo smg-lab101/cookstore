@@ -1,8 +1,8 @@
-// app/detail/[id]/page.tsx
-import fs from "fs";
-import path from "path";
-// export const dynamicParams = false;
+'use client';
 
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type Recipe = {
     id: string;
@@ -13,40 +13,44 @@ type Recipe = {
     steps: string;
 };
 
-export async function generateStaticParams() {
-    const dataPath = path.join(process.cwd(), "app/data/recipes.json");
-    const jsonData = fs.readFileSync(dataPath, "utf-8");
-    const recipes: Recipe[] = JSON.parse(jsonData);
+export default function RecipeDetail() {
+    const { id } = useParams(); // ⬅️ useParams statt props
+    const router = useRouter();
+    const [recipe, setRecipe] = useState<Recipe | null>(null);
 
-    return recipes.map((recipe) => ({
-        id: recipe.id,
-    }));
-}
+    useEffect(() => {
+        if (!id || typeof id !== 'string') return;
 
-export default async function RecipeDetail({
-                                               params,
-                                           }: {
-    params: Promise<{ id: string }>;
-}) {
-    const {id} = await params;
+        fetch(`/api/recipes/${id}`)
+            .then((res) => res.json())
+            .then((data) => setRecipe(data));
+    }, [id]);
 
-    const dataPath = path.join(process.cwd(), "app/data/recipes.json");
-    const jsonData = fs.readFileSync(dataPath, "utf-8");
-    const recipes: Recipe[] = JSON.parse(jsonData);
+    const handleDelete = async () => {
+        if (!id || typeof id !== 'string') return;
+        if (!confirm("Wirklich löschen?")) return;
 
-    const recipe = recipes.find((r) => r.id === id);
+        const res = await fetch(`/api/recipes/${id}`, {
+            method: 'DELETE',
+        });
 
-    if (!recipe) {
-        return <div>Rezept nicht gefunden für ID: {id}</div>;
-    }
+        if (res.ok) {
+            router.push('/list');
+        } else {
+            alert('Fehler beim Löschen');
+        }
+    };
+
+    if (!recipe) return <div>Lade Rezept...</div>;
 
     return (
         <div>
             <div className="header">
                 <div className="logo">Logo</div>
                 <div>
-                    <a href="/list" className="btn">Zu den Rezepten</a>
-                    <a href="/new" className="btn">Neues Rezept</a>
+                    <Link href="/list" className="btn">Zu den Rezepten</Link>
+                    <Link href="/new" className="btn">Neues Rezept</Link>
+                    <button onClick={handleDelete} className="btn">Löschen</button>
                 </div>
             </div>
 
