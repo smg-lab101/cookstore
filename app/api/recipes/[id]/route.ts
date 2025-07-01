@@ -1,48 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import mongoose from 'mongoose';
+import { Recipe } from '@/models/index';
 
-const filePath = path.join(process.cwd(), 'app', 'data', 'recipes.json');
+// connect to MongoDB
+const MONGO_URI = process.env.MONGO_URI ?? (
+  process.env.NODE_ENV === 'production'
+    ? 'mongodb://mongo:27017/cookstore' // in Docker
+    : 'mongodb://localhost:27017/cookstore' // local dev in IDE
+);
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-    const file = await fs.readFile(filePath, 'utf-8');
-    const recipes = JSON.parse(file);
-    const recipe = recipes.find((r: any) => r.id === params.id);
+async function connectToMongo() {
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(MONGO_URI);
+  }
+}
+
+// ✅ This is the magic: use type `Params` from Next.js App Router context
+export async function GET(
+  req: NextRequest,
+  {params}: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  try {
+    await connectToMongo();
+
+    const recipe = await Recipe.findById(id).populate('createdBy');
 
     if (!recipe) {
-        return NextResponse.json({ error: 'Not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Recipe not found' }, { status: 404 });
     }
 
     return NextResponse.json(recipe);
-}
-
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-    const file = await fs.readFile(filePath, 'utf-8');
-    let recipes = JSON.parse(file);
-
-    const index = recipes.findIndex((r: any) => r.id === params.id);
-    if (index === -1) {
-        return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
-
-    const deleted = recipes.splice(index, 1);
-    await fs.writeFile(filePath, JSON.stringify(recipes, null, 2));
-
-    return NextResponse.json({ success: true, deleted: deleted[0] });
-}
-
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-    const body = await req.json();
-    const file = await fs.readFile(filePath, 'utf-8');
-    const recipes = JSON.parse(file);
-
-    const index = recipes.findIndex((r: any) => r.id === params.id);
-    if (index === -1) {
-        return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
-
-    recipes[index] = { ...recipes[index], ...body };
-    await fs.writeFile(filePath, JSON.stringify(recipes, null, 2));
-
-    return NextResponse.json({ success: true, updated: recipes[index] });
+  } catch (err) {
+    console.error('GET /api/recipes/[id] failed:', err);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
