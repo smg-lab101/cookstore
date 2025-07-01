@@ -12,7 +12,16 @@ export default async function RecipeList() {
   const res = await fetch("http://localhost:3000/api/recipes", {
     cache: "no-store", // wichtig, damit neue Rezepte direkt angezeigt werden
   });
-  const recipes: Recipe[] = await res.json();
+
+
+  const data = await res.json();
+
+  if (!Array.isArray(data)) {
+    console.error("Invalid response from API:", data);
+    return <div>Fehler beim Laden der Rezepte</div>;
+  }
+
+  const recipes: Recipe[] = data;
 
   return (
     <div>
