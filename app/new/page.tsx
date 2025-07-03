@@ -24,28 +24,39 @@ const NewRecipePage: NextPage = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        const payload = {
-            ...formData,
-            id: formData.title.toLowerCase().replace(/\s+/g, "-"), // einfache ID aus Titel
-            ingredients: formData.ingredients.split(",").map(i => i.trim()),
-            image: "Bild", // Platzhalter
-        };
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        steps: formData.steps,
+        imageUrl: "Bild", // or real URL later
+        labels: [],       // optional for now
+        ingredients: formData.ingredients.split(",").map(i => {
+          const match = i.trim().match(/^(\d+)\s*([a-zA-Z]+)?\s+(.*)$/);
+          if (!match) return { name: i.trim(), amount: 0, unit: "" };
+          const [, amount, unit, name] = match;
+          return {
+            name,
+            amount: parseInt(amount, 10),
+            unit: unit || "",
+          };
+        }),
+        // optional: createdBy can be added later from session/user state
+      };
 
-        const res = await fetch("/api/recipes/new", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
+      const res = await fetch("/api/recipes/new", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-        if (res.ok) {
-            router.push("/list");
-        } else {
-            alert("Fehler beim Speichern");
-        }
+      if (res.ok) {
+        router.push("/list");
+      } else {
+        alert("Fehler beim Speichern");
+      }
     };
-
     return (
         <div>
             <div className="header">
