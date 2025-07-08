@@ -1,27 +1,8 @@
-// app/list/page.tsx
 import Link from "next/link";
-
-type Recipe = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-};
+import { getRecipes } from "../../lib/getRecipes"; // <-- ✅ use relative path
 
 export default async function RecipeList() {
-  const res = await fetch("http://localhost:3000/api/recipes", {
-    cache: "no-store", // wichtig, damit neue Rezepte direkt angezeigt werden
-  });
-
-
-  const data = await res.json();
-
-  if (!Array.isArray(data)) {
-    console.error("Invalid response from API:", data);
-    return <div>Fehler beim Laden der Rezepte</div>;
-  }
-
-  const recipes: Recipe[] = data;
+  const recipes = await getRecipes();
 
   return (
     <div>
@@ -33,10 +14,10 @@ export default async function RecipeList() {
       <h1>Meine Rezepte</h1>
 
       <div className="content">
-        {recipes.map((recipe) => (
-          <div className="recipe-card" key={recipe.id}>
-            <a href={`/detail/${recipe.id}`}>
-              <div className="recipe-image">{recipe.image}</div>
+        {recipes.map((recipe: any) => (
+          <div className="recipe-card" key={recipe._id}>
+            <a href={`/detail/${recipe.title.toLowerCase().replace(/\s+/g, "-")}`}>
+              <div className="recipe-image">{recipe.imageUrl}</div>
               <div className="recipe-info">
                 <div className="recipe-title">{recipe.title}</div>
                 <div className="recipe-details">{recipe.description}</div>

@@ -18,14 +18,27 @@ async function connectToMongo() {
   }
 }
 
-export async function GET() {
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const title = params.id.replace(/-/g, ' ').toLowerCase();
+
   try {
     await connectToMongo();
-    const recipes = await Recipe.find().populate('createdBy');
-    return NextResponse.json(recipes);
+
+    const recipe = await Recipe.findOne({
+      title: new RegExp('^' + title + '$', 'i') // case-insensitive exact match
+    }).populate('createdBy');
+
+    if (!recipe) {
+      return NextResponse.json({ error: 'Recipe not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(recipe);
   } catch (err) {
-    console.error('GET error:', err);
-    return NextResponse.json({ error: 'Failed to fetch recipes' }, { status: 500 });
+    console.error('GET /api/recipes/[id] failed:', err);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 

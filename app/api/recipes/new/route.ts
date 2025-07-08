@@ -1,25 +1,32 @@
-// app/api/recipes/route.ts
+4// app/api/recipes/new/route.ts
 
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+ import { NextRequest, NextResponse } from 'next/server';
+ import mongoose from 'mongoose';
+ import { Recipe } from '@/models/index';
 
-export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json();
+ const MONGO_URI = process.env.MONGO_URI ?? (
+   process.env.NODE_ENV === 'production'
+     ? 'mongodb://mongo:27017/cookstore'
+     : 'mongodb://localhost:27017/cookstore'
+ );
 
-        const filePath = path.join(process.cwd(), 'app', 'data', 'recipes.json');
-        const file = await fs.readFile(filePath, 'utf-8');
-        const recipes = JSON.parse(file);
+ async function connectToMongo() {
+   if (mongoose.connection.readyState === 0) {
+     await mongoose.connect(MONGO_URI);
+   }
+ }
 
-        const newRecipe = { ...body };
-        recipes.push(newRecipe);
+ export async function POST(req: NextRequest) {
+   try {
+     const body = await req.json();
+     await connectToMongo();
 
-        await fs.writeFile(filePath, JSON.stringify(recipes, null, 2));
+     // Save the recipe to MongoDB
+     const newRecipe = await Recipe.create({ ...body });
 
-        return NextResponse.json({ success: true, recipe: newRecipe });
-    } catch (error) {
-        console.error("Fehler in API:", error);
-        return NextResponse.json({ success: false, error: 'Interner Fehler' }, { status: 500 });
-    }
-}
+     return NextResponse.json({ success: true, recipe: newRecipe });
+   } catch (error) {
+     console.error("Fehler in POST /api/recipes/new:", error);
+     return NextResponse.json({ success: false, error: 'Interner Fehler' }, { status: 500 });
+   }
+ }

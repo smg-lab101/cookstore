@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Recipe } from '@/models/index';
 
-// connect to MongoDB
 const MONGO_URI = process.env.MONGO_URI ?? (
   process.env.NODE_ENV === 'production'
-    ? 'mongodb://mongo:27017/cookstore' // in Docker
-    : 'mongodb://localhost:27017/cookstore' // local dev in IDE
+    ? 'mongodb://mongo:27017/cookstore'
+    : 'mongodb://localhost:27017/cookstore'
 );
 
 async function connectToMongo() {
@@ -15,17 +14,18 @@ async function connectToMongo() {
   }
 }
 
-// ✅ This is the magic: use type `Params` from Next.js App Router context
 export async function GET(
-  req: NextRequest,
-  {params}: { params: Promise<{ id: string }> }
+  _req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await params;
-
   try {
     await connectToMongo();
 
-    const recipe = await Recipe.findById(id).populate('createdBy');
+    const titleSlug = params.id.replace(/-/g, ' ').toLowerCase();
+
+    const recipe = await Recipe.findOne({
+      title: new RegExp('^' + titleSlug + '$', 'i') // case-insensitive exact match
+    }).populate('createdBy');
 
     if (!recipe) {
       return NextResponse.json({ error: 'Recipe not found' }, { status: 404 });
