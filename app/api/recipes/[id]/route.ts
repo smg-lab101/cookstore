@@ -1,25 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Recipe } from '@/models/index';
+import dbConnect from '@/lib/dbConnect';
 
-const MONGO_URI = process.env.MONGO_URI ?? (
-  process.env.NODE_ENV === 'production'
-    ? 'mongodb://mongo:27017/cookstore'
-    : 'mongodb://localhost:27017/cookstore'
-);
-
-async function connectToMongo() {
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(MONGO_URI);
-  }
-}
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectToMongo();
+    await dbConnect();
 
     const titleSlug = params.id.replace(/-/g, ' ').toLowerCase();
 

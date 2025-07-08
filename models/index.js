@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   name: String,
@@ -17,5 +18,7 @@ const RecipeSchema = new Schema({
   steps: String,
 });
 
-export const User = mongoose.models.User || mongoose.model('User', UserSchema);
-export const Recipe = mongoose.models.Recipe || mongoose.model('Recipe', RecipeSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+const Recipe = mongoose.models.Recipe || mongoose.model('Recipe', RecipeSchema);
+
+module.exports = { Recipe, User };

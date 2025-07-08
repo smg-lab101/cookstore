@@ -2,21 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { Recipe } from '@/models/index'; // points to models/index.js
 import dotenv from 'dotenv';
+import dbConnect from '@/lib/dbConnect';
 
 // Load env vars (useful for local dev)
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI ?? (
-  process.env.NODE_ENV === 'production'
-    ? 'mongodb://mongo:27017/cookstore' // in Docker
-    : 'mongodb://localhost:27017/cookstore' // local dev in IDE
-);
 
-async function connectToMongo() {
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(MONGO_URI);
-  }
-}
 
 export async function GET(
   _req: NextRequest,
@@ -25,7 +16,7 @@ export async function GET(
   const title = params.id.replace(/-/g, ' ').toLowerCase();
 
   try {
-    await connectToMongo();
+    await dbConnect();
 
     const recipe = await Recipe.findOne({
       title: new RegExp('^' + title + '$', 'i') // case-insensitive exact match
@@ -45,7 +36,7 @@ export async function GET(
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    await connectToMongo();
+    await dbConnect();
 
     const newRecipe = await Recipe.create(body);
     return NextResponse.json({ success: true, recipe: newRecipe });
