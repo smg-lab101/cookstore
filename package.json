@@ -10,7 +10,8 @@
     "seed": "node mongo-scripts/seed.js",
     "save": "node mongo-scripts/recipe-save.js",
     "list": "node mongo-scripts/recipe-list.js",
-    "test": "jest"
+    "test": "jest",
+    "systemtest": "jest __tests__/system"
   },
   "dependencies": {
     "dotenv": "^17.0.0",
